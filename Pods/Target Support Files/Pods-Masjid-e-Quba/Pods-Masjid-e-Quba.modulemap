@@ -1,0 +1,6 @@
+framework module Pods_Masjid_e_Quba {
+  umbrella header "Pods-Masjid-e-Quba-umbrella.h"
+
+  export *
+  module * { export * }
+}
