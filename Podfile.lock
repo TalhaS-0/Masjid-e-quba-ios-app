@@ -2,6 +2,7 @@ PODS:
   - AAPickerView (1.3)
   - Alamofire (5.4.4)
   - ANActivityIndicator (1.2.0)
+  - CenteredCollectionView (2.2.2)
   - Firebase/Analytics (8.9.1):
     - Firebase/Core
   - Firebase/Auth (8.9.1):
@@ -126,12 +127,14 @@ PODS:
   - nanopb/decode (2.30908.0)
   - nanopb/encode (2.30908.0)
   - PromisesObjC (2.0.0)
+  - ScalingCarousel (3.2.0)
   - SKActivityIndicatorView (1.0.0)
 
 DEPENDENCIES:
   - AAPickerView (~> 1.0)
   - Alamofire (~> 5.4)
   - ANActivityIndicator
+  - CenteredCollectionView
   - Firebase/Analytics
   - Firebase/Auth
   - Firebase/Core
@@ -140,6 +143,7 @@ DEPENDENCIES:
   - Firebase/Storage
   - IQKeyboardManagerSwift
   - Kingfisher (~> 5.15.7)
+  - ScalingCarousel
   - SKActivityIndicatorView (~> 1.0.0)
 
 SPEC REPOS:
@@ -147,6 +151,7 @@ SPEC REPOS:
     - AAPickerView
     - Alamofire
     - ANActivityIndicator
+    - CenteredCollectionView
     - Firebase
     - FirebaseAnalytics
     - FirebaseAuth
@@ -165,12 +170,14 @@ SPEC REPOS:
     - leveldb-library
     - nanopb
     - PromisesObjC
+    - ScalingCarousel
     - SKActivityIndicatorView
 
 SPEC CHECKSUMS:
   AAPickerView: 98fefdd9610a982e1a344e09192906154f868e1f
   Alamofire: f3b09a368f1582ab751b3fff5460276e0d2cf5c9
   ANActivityIndicator: 44a996931d0c554cf157b31056603b23bbdbe76a
+  CenteredCollectionView: a9217908a698c386cbb98af11b596da48900b908
   Firebase: fb5114cd2bf96e2ff7bcb01d0d9a156cf5fd2f07
   FirebaseAnalytics: 4ab446ce08a3fe52e8a4303dd997cf26276bf968
   FirebaseAuth: 2b78b2a32c07b3ecfa4970bdf1d3632b8304099b
@@ -189,8 +196,9 @@ SPEC CHECKSUMS:
   leveldb-library: 50c7b45cbd7bf543c81a468fe557a16ae3db8729
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58
+  ScalingCarousel: d40f0ce438af5cfb2225e2f723f7161597961128
   SKActivityIndicatorView: 81c123380127ad497f9b57cd4d11347e40ab3427
 
-PODFILE CHECKSUM: 10651a17daffbe84ebe61b5211d687dd693ccbd4
+PODFILE CHECKSUM: 87e6d5c4d698c6c4548d9c84d8f8511bc8c9c5bd
 
 COCOAPODS: 1.11.2

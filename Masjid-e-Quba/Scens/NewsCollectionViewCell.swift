@@ -6,12 +6,13 @@
 //
 
 import UIKit
+import ScalingCarousel
 
-class NewsCollectionViewCell: UICollectionViewCell {
+class NewsCollectionViewCell: ScalingCarouselCell {
     
     
     @IBOutlet weak var lblTitle: UILabel!
     @IBOutlet weak var lblDescription: UILabel!
     @IBOutlet weak var lblDate: UILabel!
-    
+    @IBOutlet weak var shadowView:UIView!
 }

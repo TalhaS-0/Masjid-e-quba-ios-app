@@ -21,5 +21,7 @@ target 'Masjid-e-Quba' do
     pod 'Firebase/Storage'
     pod 'Firebase/Crashlytics'
     pod 'ANActivityIndicator'
+    pod "ScalingCarousel"
+    pod "CenteredCollectionView"
 
 end

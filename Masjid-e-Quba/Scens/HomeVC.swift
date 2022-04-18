@@ -9,25 +9,20 @@ import UIKit
 import Alamofire
 import Firebase
 import ANActivityIndicator
+import ScalingCarousel
+import CenteredCollectionView
 
 
-class HomeVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class HomeVC: BaseVC {
     
     //MARK: - Outlets variables
-    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var newsCV: ScalingCarouselView!
     @IBOutlet weak var lblTodayDate: UILabel!
     @IBOutlet weak var lblTodayHijriDate: UILabel!
-    @IBOutlet weak var lblFajrStart: UILabel!
-    @IBOutlet weak var lblFajrJamat: UILabel!
-    @IBOutlet weak var lblSunriseTime: UILabel!
-    @IBOutlet weak var lblZhrStart: UILabel!
-    @IBOutlet weak var lblZhrJamat: UILabel!
-    @IBOutlet weak var lblAsrStart: UILabel!
-    @IBOutlet weak var lblAsrJamat: UILabel!
-    @IBOutlet weak var lblMaghribStart: UILabel!
-    @IBOutlet weak var lblMaghribJamat: UILabel!
-    @IBOutlet weak var lblIshaStart: UILabel!
-    @IBOutlet weak var lblIshaJamat: UILabel!
+    @IBOutlet weak var todayBtn: UIButton!
+    @IBOutlet weak var todayBtnView: UIView!
+
+    @IBOutlet weak var namazTimeCV: UICollectionView!
     
     //MARK: - Local variables
     var CalendarDict = NSDictionary()
@@ -45,6 +40,11 @@ class HomeVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource, UICo
     var ref: DatabaseReference!
     var toolBar = UIToolbar()
     var datePicker  = UIDatePicker()
+    var months: [String] = []
+    var days: [String] = []
+    
+    let cellPercentWidth: CGFloat = 1.0
+    var centeredCollectionViewFlowLayout: CenteredCollectionViewFlowLayout!
     
     //MARK: - Call when view intialized and load in frame
     override func viewDidLoad() {
@@ -53,9 +53,28 @@ class HomeVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource, UICo
         self.ref = Database.database().reference()
         self.initView()
     }
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        newsCV.deviceRotated()
+    }
     
     //MARK: - Intialize the view objects
     private func initView() {
+        
+        namazTimeCV.delegate = self
+        namazTimeCV.dataSource = self
+        
+        centeredCollectionViewFlowLayout = (namazTimeCV.collectionViewLayout as! CenteredCollectionViewFlowLayout)
+
+        // Modify the collectionView's decelerationRate (REQURED)
+        namazTimeCV.decelerationRate = UIScrollView.DecelerationRate.fast
+        centeredCollectionViewFlowLayout.itemSize = CGSize(
+            width: namazTimeCV.frame.width,
+            height: namazTimeCV.frame.height
+        )
+        // Configure the optional inter item spacing (OPTIONAL)
+        centeredCollectionViewFlowLayout.minimumLineSpacing = 50
+        
         lblTodayDate.text = getCurrentDate_Month_Year()
         lblTodayHijriDate.text = getCurrentHijriDate()
         currentDate = getCurrentDate()
@@ -63,42 +82,49 @@ class HomeVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource, UICo
         currentYear = getCurrentYear()
         self.fetchNamazData()
         self.fetchNewsFeed()
+        
+        
+        todayBtnView.layer.borderColor = UIColor.black.cgColor
+        todayBtnView.layer.borderWidth = 2
+        todayBtnView.layer.cornerRadius = todayBtnView.frame.height/2
+        
+        for i in 1...9{
+            months.append("0\(i)")
+            days.append("0\(i)")
+        }
+        months.append("10")
+        months.append("11")
+        months.append("12")
+        
+        for i in 10...31{
+            days.append("\(i)")
+        }
+
+        print("Months ", months)
+        print("Days ", days)
     }
     
-    // MARK: - Number of Items in section Delegate
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return newsModel.count
+    fileprivate func scrollToTodayTimings(){
+        self.namazTimeCV.isPagingEnabled = false
+
+        self.namazTimeCV.scrollToItem(at: IndexPath(item: (Int(self.currentDate)! - 1), section: (Int(self.currentMonth)! - 1)), at: .centeredHorizontally, animated: false)
+//        self.namazTimeCV.isPagingEnabled = true
+
+//        self.namazTimeCV.reloadItems(at: [IndexPath.init(row: Int(self.currentDate)!, section: Int(self.currentMonth)!)])
+//
+//        self.namazTimeCV.isPagingEnabled = false
+
+        self.namazTimeCV.scrollToItem(at: IndexPath(item: (Int(self.currentDate)! - 1), section: (Int(self.currentMonth)! - 1)), at: .centeredHorizontally, animated: false)
+//        self.namazTimeCV.isPagingEnabled = true
+
     }
-    
-    // MARK: - Cell for Item on indexPath
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! NewsCollectionViewCell
-        let obj = newsModel[indexPath.row]
-        cell.lblTitle.text = obj.title?.rendered
-        cell.lblDescription.text = obj.excerpt?.rendered?.stripOutHtml()
-        cell.lblDate.text = obj.date
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let obj = newsModel[indexPath.row]
-        guard let url = URL(string: obj.link ?? "http://www.mequba.com") else { return }
-        UIApplication.shared.open(url)
-//        guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "NewsVC") as? NewsVC else { return }
-//        vc.url = obj.link
-//        self.navigationController?.pushViewController(vc, animated: true)
-    }
-    
-    // MARK: - Flowlayout delegate to set size of cell
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width  = self.view.frame.size.width;
-        // in case you you want the cell to be 40% of your controllers view
-        // If you want to horizontal scroll and show as slider to view items
-        return CGSize(width:width * 0.85 , height: width * 0.30);
-    }
-    
     @IBAction func actionTodayTime(_ sender: Any) {
-        fetchNamazData()
+        DispatchQueue.main.async {
+            self.scrollToTodayTimings()
+
+        }
+        
+//        fetchNamazData()
     }
     
     @IBAction func actionLiveStream(_ sender: Any) {
@@ -117,62 +143,43 @@ class HomeVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource, UICo
     
     //MARK: - Action on label date using button
     @IBAction func actionDatePicker(_ sender: Any) {
-        datePicker = UIDatePicker.init()
-        datePicker.date = Date()
-        datePicker.preferredDatePickerStyle = .compact
-        datePicker.backgroundColor = .white
-    
-        datePicker.autoresizingMask = .flexibleWidth
-        datePicker.datePickerMode = .date
-        
-        datePicker.addTarget(self, action: #selector(self.dateChanged(_:)), for: .valueChanged)
-        datePicker.frame = CGRect(x: 0.0, y: UIScreen.main.bounds.size.height - 300, width: UIScreen.main.bounds.size.width, height: 300)
-        self.view.addSubview(datePicker)
-                   
-        toolBar = UIToolbar(frame: CGRect(x: 0, y: UIScreen.main.bounds.size.height - 300, width: UIScreen.main.bounds.size.width, height: 50))
-        toolBar.barStyle = UIBarStyle.black
-        toolBar.items = [UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil), UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(self.onDoneButtonClick))]
-        toolBar.sizeToFit()
-        self.view.addSubview(toolBar)
-    }
-    
-    @objc func dateChanged(_ sender: UIDatePicker?) {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .long
-        dateFormatter.timeStyle = .none
+        RPicker.selectDate(title: "Select Date", cancelText: "Cancel", datePickerMode: .date, style: .Inline, didSelectDate: {[weak self] (selectedDate) in
+            // TODO: Your implementation for date
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateStyle = .long
+            dateFormatter.timeStyle = .none
             
-        if let date = sender?.date {
+            let date = selectedDate
             print(date)
             print("Picked the date \(dateFormatter.string(from: date))")
             dateFormatter.dateFormat = "EEEE, MMMM d, yyyy"
-            selectedDate_Month_year = dateFormatter.string(from: date)
+            self?.selectedDate_Month_year = dateFormatter.string(from: date)
             dateFormatter.dateFormat = "yyyy"
-            selectedYear = dateFormatter.string(from: date)
+            self?.selectedYear =   dateFormatter.string(from: date)
             dateFormatter.dateFormat = "MM"
-            selectedMonth = dateFormatter.string(from: date)
+            self?.selectedMonth = dateFormatter.string(from: date)
             dateFormatter.dateFormat = "dd"
-            selectedDate = dateFormatter.string(from: date)
-            debugPrint(selectedDate!)
-            debugPrint(selectedMonth!)
-            debugPrint(selectedYear!)
-        }
-    }
-
-    @objc func onDoneButtonClick() {
-        toolBar.removeFromSuperview()
-        datePicker.removeFromSuperview()
-        if selectedYear != currentYear {
-            self.showAlert(title: ERROR, message: "Please select current year only")
-        } else {
-            debugPrint(selectedMonth!)
-            debugPrint(selectedDate!)
-            let selectedMonth = CalendarDict[selectedMonth!] as! NSDictionary
-            debugPrint(selectedMonth)
-            let selectedDate = selectedMonth[selectedDate!] as! NSDictionary
+            self?.selectedDate = dateFormatter.string(from: date)
             debugPrint(selectedDate)
-            SetUpNamazTimings(selectedDate)
-            lblTodayDate.text = selectedDate_Month_year
-        }
+            debugPrint(self?.selectedMonth!)
+            debugPrint(self?.selectedYear!)
+            
+            if self?.selectedYear != self?.currentYear {
+                self?.showAlert(title: ERROR, message: "Please select current year only")
+            } else {
+                
+                self?.namazTimeCV.scrollToItem(at: IndexPath(item: Int((self?.selectedDate!)!)!, section: Int((self?.selectedMonth!)!)!), at: .centeredVertically, animated: false)
+                self?.namazTimeCV.scrollToItem(at: IndexPath(item: Int((self?.selectedDate!)!)!, section: Int((self?.selectedMonth!)!)!), at: .centeredVertically, animated: false)
+
+//                let selectedMonth = self?.CalendarDict[self?.selectedMonth!] as! NSDictionary
+//                debugPrint(selectedMonth)
+//                let selectedDate = selectedMonth[self?.selectedDate!] as! NSDictionary
+//                debugPrint(selectedDate)
+//                SetUpNamazTimings(selectedDate)
+                self?.lblTodayDate.text = self?.selectedDate_Month_year
+                self?.lblTodayHijriDate.text = self?.getHijriDate(fromDate: date)
+            }
+        })
     }
     
     
@@ -182,16 +189,28 @@ class HomeVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource, UICo
         showIndicator()
         ref.child("calender").queryOrderedByKey().observeSingleEvent(of: .value, with: { snapshot in
            // self.ActivityIndicatorDismiss()
-            self.hideIndicator()
             if let value = snapshot.value as? NSDictionary {
-                print(value)
+                print("CalendarDict", value)
                 self.CalendarDict = value
+                print("allKeysMonths", self.CalendarDict.allKeys)
+
                 let currentMonth = value[self.currentMonth!] as? NSDictionary
-                debugPrint(currentMonth!)
+//                debugPrint("currentMonth ", currentMonth?["32"])
+                print("allKeysDays", currentMonth?.allKeys ?? 0)
                 let currentDate = currentMonth![self.currentDate!] as? NSDictionary
-                debugPrint(currentDate!)
-                self.TodayTiming = currentDate!
-                self.SetUpNamazTimings(self.TodayTiming)
+//                debugPrint("currentDate ",self.currentDate!)
+                print("allKeysADay", currentDate?.allKeys ?? 0)
+
+//                self.TodayTiming = currentDate!
+//                self.SetUpNamazTimings(self.TodayTiming)
+                
+                self.hideIndicator()
+
+                DispatchQueue.main.async {
+                    self.namazTimeCV.reloadData()
+                    self.scrollToTodayTimings()
+                }
+                
 //                for eachSnap in value {
 //                    guard let eachUserDict = eachSnap.value as? Dictionary<String,AnyObject> else { return }
 //                    debugPrint(eachUserDict)
@@ -224,19 +243,19 @@ class HomeVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource, UICo
     
     
     //MARK: - SetupData in field
-    private func SetUpNamazTimings(_ schedule: NSDictionary) {
-        lblFajrStart.text = (schedule[Namaz.fajarStart.rawValue] as! String)
-        lblFajrJamat.text = (schedule[Namaz.fajar.rawValue] as! String)
-        lblSunriseTime.text = (schedule[Namaz.sunRise.rawValue] as! String)
-        lblZhrStart.text = (schedule[Namaz.zuharStart.rawValue] as! String)
-        lblZhrJamat.text = (schedule[Namaz.zuhar.rawValue] as! String)
-        lblAsrStart.text = (schedule[Namaz.asarStart.rawValue] as! String)
-        lblAsrJamat.text = (schedule[Namaz.asar.rawValue] as! String)
-        lblMaghribStart.text = (schedule[Namaz.maghribStart.rawValue] as! String)
-        lblMaghribJamat.text = (schedule[Namaz.maghrib.rawValue] as! String)
-        lblIshaStart.text = (schedule[Namaz.ishaStart.rawValue] as! String)
-        lblIshaJamat.text = (schedule[Namaz.isha.rawValue] as! String)
-    }
+//    private func SetUpNamazTimings(_ schedule: NSDictionary) {
+//        lblFajrStart.text = (schedule[Namaz.fajarStart.rawValue] as! String)
+//        lblFajrJamat.text = (schedule[Namaz.fajar.rawValue] as! String)
+//        lblSunriseTime.text = (schedule[Namaz.sunRise.rawValue] as! String)
+//        lblZhrStart.text = (schedule[Namaz.zuharStart.rawValue] as! String)
+//        lblZhrJamat.text = (schedule[Namaz.zuhar.rawValue] as! String)
+//        lblAsrStart.text = (schedule[Namaz.asarStart.rawValue] as! String)
+//        lblAsrJamat.text = (schedule[Namaz.asar.rawValue] as! String)
+//        lblMaghribStart.text = (schedule[Namaz.maghribStart.rawValue] as! String)
+//        lblMaghribJamat.text = (schedule[Namaz.maghrib.rawValue] as! String)
+//        lblIshaStart.text = (schedule[Namaz.ishaStart.rawValue] as! String)
+//        lblIshaJamat.text = (schedule[Namaz.isha.rawValue] as! String)
+//    }
     
     private func fetchNewsFeed() {
         showIndicator()
@@ -248,7 +267,7 @@ class HomeVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource, UICo
             if JSONData!.count > 0 {
                 self.newsModel = JSONData!
                 dump(self.newsModel)
-                self.collectionView.reloadData()
+                self.newsCV.reloadData()
             } else {
                 self.showAlert(title: ERROR, message: "No data found")
             }
@@ -266,6 +285,129 @@ class HomeVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource, UICo
 //            self.showAlert(title: ERROR, message: error)
 //        }
 //    }
-    
+    fileprivate func getNoOfDaysInMonth(year: Int, month: Int) -> Int{
+        let dateComponents = DateComponents(year: year, month: month)
+        let calendar = Calendar.current
+        let date = calendar.date(from: dateComponents)!
+
+        let range = calendar.range(of: .day, in: .month, for: date)!
+        let numDays = range.count
+        return numDays
+    }
 }
 
+extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource, UIScrollViewDelegate{
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        if collectionView == newsCV{
+            return 1
+        }else{
+            return months.count
+        }
+    }
+    // MARK: - Number of Items in section Delegate
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if collectionView == newsCV{
+            return newsModel.count
+        }else{
+//            print("getNoOfDaysInMonth ", getNoOfDaysInMonth(year: 2022, month: Int(months[section])!))
+//            print("getNoOfDaysInMonth Section ", section)
+
+            return getNoOfDaysInMonth(year: 2022, month: Int(months[section])!)
+        }
+    }
+    
+    // MARK: - Cell for Item on indexPath
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if collectionView == newsCV{
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! NewsCollectionViewCell
+            let obj = newsModel[indexPath.row]
+            cell.lblTitle.text = obj.title?.rendered
+            cell.lblDescription.text = obj.excerpt?.rendered?.stripOutHtml()
+            cell.lblDate.text = obj.date
+            
+            //give shadow
+            cell.shadowView.layer.shadowColor = UIColor.black.cgColor
+            cell.shadowView.layer.shadowOpacity = 0.2
+            cell.shadowView.layer.shadowOffset = .zero
+            cell.shadowView.layer.shadowRadius = 4
+            cell.shadowView.layer.cornerRadius = 4
+            
+//            cell.setNeedsLayout()
+//            cell.layoutIfNeeded()
+            
+            return cell
+        }else{
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TimeCVC", for: indexPath) as! TimeCVC
+            
+            if let currentMonth = CalendarDict[months[indexPath.section]] as? NSDictionary{
+                debugPrint("currentMonthhh ", indexPath.section + 1)
+                if let currentDate = currentMonth[days[indexPath.row]] as? NSDictionary{
+                    debugPrint("currentDateee ", indexPath.row + 1)
+//                    self.TodayTiming = currentDate
+//                    self.SetUpNamazTimings(self.TodayTiming)
+                    //set date
+                    let dateString = "\(days[indexPath.row])/\(months[indexPath.section])/\(2022)"
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "dd/MM/yy"
+                    let date = dateFormatter.date(from: dateString)
+                    dateFormatter.dateFormat = "EEEE, MMMM d, yyyy"
+                    self.lblTodayDate.text = dateFormatter.string(from: date ?? Date())
+                    self.lblTodayHijriDate.text = self.getHijriDate(fromDate: date ?? Date())
+
+
+                    cell.lblFajrStart.text = (currentDate[Namaz.fajarStart.rawValue] as! String)
+                    cell.lblFajrJamat.text = (currentDate[Namaz.fajar.rawValue] as! String)
+                    cell.lblSunriseTime.text = (currentDate[Namaz.sunRise.rawValue] as! String)
+                    cell.lblZhrStart.text = (currentDate[Namaz.zuharStart.rawValue] as! String)
+                    cell.lblZhrJamat.text = (currentDate[Namaz.zuhar.rawValue] as! String)
+                    cell.lblAsrStart.text = (currentDate[Namaz.asarStart.rawValue] as! String)
+                    cell.lblAsrJamat.text = (currentDate[Namaz.asar.rawValue] as! String)
+                    cell.lblMaghribStart.text = (currentDate[Namaz.maghribStart.rawValue] as! String)
+                    cell.lblMaghribJamat.text = (currentDate[Namaz.maghrib.rawValue] as! String)
+                    cell.lblIshaStart.text = (currentDate[Namaz.ishaStart.rawValue] as! String)
+                    cell.lblIshaJamat.text = (currentDate[Namaz.isha.rawValue] as! String)
+
+                    
+                }else{
+                    print("Date Error")
+                }
+                
+            }else{
+                print("Month Error")
+            }
+            
+            return cell
+        }
+        
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if collectionView == newsCV{
+            let obj = newsModel[indexPath.row]
+            guard let url = URL(string: obj.link ?? "http://www.mequba.com") else { return }
+            UIApplication.shared.open(url)
+
+        }else{
+            print("calender tapped")
+        }
+    }
+    
+    // MARK: - Flowlayout delegate to set size of cell
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let width  = namazTimeCV.frame.width
+        let height = namazTimeCV.frame.height
+        // in case you you want the cell to be 40% of your controllers view
+        // If you want to horizontal scroll and show as slider to view items
+        if collectionView == newsCV{
+
+            return CGSize(width: width , height: newsCV.frame.height);
+        }else{
+            return CGSize(width: width, height: height)
+        }
+    }
+    
+//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        newsCV.didScroll()
+//    }
+}

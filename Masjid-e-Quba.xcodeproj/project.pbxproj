@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2F4362AB280D5F49002CB349 /* TimeCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F4362AA280D5F49002CB349 /* TimeCVC.swift */; };
+		2F4362AD280D7F11002CB349 /* RPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F4362AC280D7F11002CB349 /* RPicker.swift */; };
 		439E21F1279FCF1B00AF550B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439E21F0279FCF1B00AF550B /* AppDelegate.swift */; };
 		439E21F5279FCF1B00AF550B /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439E21F4279FCF1B00AF550B /* HomeVC.swift */; };
 		439E21F8279FCF1B00AF550B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 439E21F6279FCF1B00AF550B /* Main.storyboard */; };
@@ -36,6 +38,8 @@
 
 /* Begin PBXFileReference section */
 		1C17029A1BB552E5AA397169 /* Pods-Masjid-e-Quba.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Masjid-e-Quba.debug.xcconfig"; path = "Target Support Files/Pods-Masjid-e-Quba/Pods-Masjid-e-Quba.debug.xcconfig"; sourceTree = "<group>"; };
+		2F4362AA280D5F49002CB349 /* TimeCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeCVC.swift; sourceTree = "<group>"; };
+		2F4362AC280D7F11002CB349 /* RPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RPicker.swift; sourceTree = "<group>"; };
 		439E21ED279FCF1B00AF550B /* Masjid-e-Quba.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Masjid-e-Quba.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		439E21F0279FCF1B00AF550B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		439E21F4279FCF1B00AF550B /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
@@ -231,6 +235,7 @@
 			children = (
 				439E221B279FD4F300AF550B /* PhotoLibraryExtension.swift */,
 				439E221C279FD4F300AF550B /* Extension.swift */,
+				2F4362AC280D7F11002CB349 /* RPicker.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -252,6 +257,7 @@
 				43BF50C127A2DB2600A8C1A4 /* NewsCollectionViewCell.swift */,
 				43B83A3227A3C38C007973F7 /* NewsVC.swift */,
 				43B83A3427A3E208007973F7 /* LiveStreamVC.swift */,
+				2F4362AA280D5F49002CB349 /* TimeCVC.swift */,
 			);
 			path = Scens;
 			sourceTree = "<group>";
@@ -412,10 +418,12 @@
 				439E222D279FD4FA00AF550B /* Reachablity.swift in Sources */,
 				439E221F279FD4F300AF550B /* CustomPicker.swift in Sources */,
 				439E221D279FD4F300AF550B /* RoundOffImageView.swift in Sources */,
+				2F4362AB280D5F49002CB349 /* TimeCVC.swift in Sources */,
 				439E2226279FD4F300AF550B /* Constant.swift in Sources */,
 				439E223427A07DE200AF550B /* Model.swift in Sources */,
 				439E221E279FD4F300AF550B /* CustomTextField.swift in Sources */,
 				439E2225279FD4F300AF550B /* Enums.swift in Sources */,
+				2F4362AD280D7F11002CB349 /* RPicker.swift in Sources */,
 				439E2227279FD4F300AF550B /* PhotoLibraryExtension.swift in Sources */,
 				43B83A3527A3E208007973F7 /* LiveStreamVC.swift in Sources */,
 				439E2221279FD4F300AF550B /* CornerView.swift in Sources */,

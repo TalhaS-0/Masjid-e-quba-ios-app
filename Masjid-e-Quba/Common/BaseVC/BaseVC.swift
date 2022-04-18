@@ -264,7 +264,16 @@ class BaseVC: UIViewController {
         let date = formatter.string(from: Date())
         return date
     }
-    
+    func getHijriDate(fromDate: Date) -> String {
+        let hijriCalendar = Calendar(identifier: .islamicTabular)
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en")
+        formatter.calendar = hijriCalendar
+        formatter.dateFormat = "d, MMMM"
+        print(formatter.string(from: fromDate))
+        let date = formatter.string(from: fromDate)
+        return date
+    }
     
     // To get email and password from Defaults
 //    func getCredentials() -> Credentials {
