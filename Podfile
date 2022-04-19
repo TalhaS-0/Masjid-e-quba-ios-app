@@ -23,5 +23,12 @@ target 'Masjid-e-Quba' do
     pod 'ANActivityIndicator'
     pod "ScalingCarousel"
     pod "CenteredCollectionView"
+    pod 'OneSignalXCFramework', '>= 3.0.0', '< 4.0'
 
+end
+
+target 'OneSignalNotificationServiceExtension' do
+  # Comment the next line if you don't want to use dynamic frameworks
+  use_frameworks!
+  pod 'OneSignalXCFramework', '>= 3.0.0', '< 4.0'
 end

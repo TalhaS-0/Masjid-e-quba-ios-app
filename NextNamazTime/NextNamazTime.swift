@@ -61,12 +61,15 @@ struct NextNamazTimeEntryView : View {
                 Text(entry.namazName)
                     .foregroundColor(Color.white)
                     .font(.system(size: 24))
+                Spacer()
+                    .frame(height: 16)
                 Text("B: " + entry.startTime)
                     .foregroundColor(Color.white)
                     .font(.system(size: 22))
                 Text("J: " + entry.jamatTime)
                     .foregroundColor(Color.white)
                     .font(.system(size: 22))
+
             }
         }
     }

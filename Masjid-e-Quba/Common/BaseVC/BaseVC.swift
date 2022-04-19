@@ -72,33 +72,36 @@ class BaseVC: UIViewController {
     
     
     
-    func showActionSheet(title: String!, message: String!, whatsAppCallback : @escaping () -> Void, emailCallback : @escaping () -> Void) -> Void {
+    func showActionSheet(title: String!, message: String!, whatsAppCallback : @escaping () -> Void, emailCallback : @escaping () -> Void, updateTimesCallBack : @escaping () -> Void) -> Void {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
             
-            alert.addAction(UIAlertAction(title: "About", style: .default , handler:{ (UIAlertAction)in
-                print("User click whatsapp button")
-                whatsAppCallback()
-            }))
-            
-            alert.addAction(UIAlertAction(title: "Info", style: .default , handler:{ (UIAlertAction)in
-                print("User click email button")
-                emailCallback()
-            }))
+        
+        
+        alert.addAction(UIAlertAction(title: "Update Prayer Times", style: .default , handler:{ (UIAlertAction)in
+            print("updateTimesCallBack")
+            updateTimesCallBack()
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Info", style: .default , handler:{ (UIAlertAction)in
+            print("User click email button")
+            emailCallback()
+        }))
 
-//            alert.addAction(UIAlertAction(title: "Delete", style: .destructive , handler:{ (UIAlertAction)in
-//                print("User click Delete button")
-//            }))
+        alert.addAction(UIAlertAction(title: "About", style: .default , handler:{ (UIAlertAction)in
+            print("User click whatsapp button")
+            whatsAppCallback()
+        }))
             
-            alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler:{ (UIAlertAction)in
-                print("User click Dismiss button")
-            }))
-            
-            //uncomment for iPad Support
-            alert.popoverPresentationController?.sourceView = self.view
-
-            self.present(alert, animated: true, completion: {
-                print("completion block")
-            })
+        alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler:{ (UIAlertAction)in
+            print("User click Dismiss button")
+        }))
+        
+        //uncomment for iPad Support
+        alert.popoverPresentationController?.sourceView = self.view
+        
+        self.present(alert, animated: true, completion: {
+            print("completion block")
+        })
     }
     // Simple Alert
     func showAlert(title: String!, message: String!) -> Void {

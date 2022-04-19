@@ -22,7 +22,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="256" height="835"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ycy-Jd-qTK" userLabel="Main View">
-                                        <rect key="frame" x="0.0" y="0.0" width="256" height="773"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="256" height="835"/>
                                         <subviews>
                                             <view alpha="0.69999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EcB-p9-ysc" customClass="GradientView" customModule="Masjid_e_Quba" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="8" width="256" height="100"/>
@@ -460,10 +460,16 @@
                                                     </collectionViewCell>
                                                 </cells>
                                             </collectionView>
+                                            <pageControl opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="MDF-Fn-8zR">
+                                                <rect key="frame" x="12" y="663" width="232" height="26"/>
+                                                <color key="pageIndicatorTintColor" systemColor="opaqueSeparatorColor"/>
+                                                <color key="currentPageIndicatorTintColor" red="0.84313725490196079" green="0.12941176470588234" blue="0.37647058823529411" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </pageControl>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="ehh-Tq-y32" secondAttribute="trailing" id="1JG-kp-rzw"/>
+                                            <constraint firstItem="MDF-Fn-8zR" firstAttribute="leading" secondItem="Ycy-Jd-qTK" secondAttribute="leading" constant="12" id="7an-jf-Dtn"/>
                                             <constraint firstItem="zkU-cF-nBL" firstAttribute="centerX" secondItem="Ycy-Jd-qTK" secondAttribute="centerX" id="9Gi-jZ-hT2"/>
                                             <constraint firstItem="EcB-p9-ysc" firstAttribute="leading" secondItem="Ycy-Jd-qTK" secondAttribute="leading" id="AkR-eG-iAx"/>
                                             <constraint firstItem="beF-Tp-Rnt" firstAttribute="top" secondItem="BV8-QC-qpc" secondAttribute="bottom" constant="12" id="D0X-kV-s15"/>
@@ -472,12 +478,14 @@
                                             <constraint firstItem="EcB-p9-ysc" firstAttribute="top" secondItem="Ycy-Jd-qTK" secondAttribute="top" constant="8" id="Vno-5c-n3t"/>
                                             <constraint firstItem="9hs-wY-1mi" firstAttribute="leading" secondItem="Ycy-Jd-qTK" secondAttribute="leading" constant="12" id="WoJ-Gy-uX4"/>
                                             <constraint firstItem="BV8-QC-qpc" firstAttribute="leading" secondItem="Ycy-Jd-qTK" secondAttribute="leading" id="baQ-Gr-hBx"/>
-                                            <constraint firstAttribute="bottom" secondItem="ehh-Tq-y32" secondAttribute="bottom" constant="122" id="gPT-Wp-35T"/>
+                                            <constraint firstAttribute="bottom" secondItem="MDF-Fn-8zR" secondAttribute="bottom" constant="146" id="eCf-2T-z6q"/>
                                             <constraint firstItem="9hs-wY-1mi" firstAttribute="top" secondItem="beF-Tp-Rnt" secondAttribute="bottom" constant="10" id="iLY-AP-zNH"/>
                                             <constraint firstItem="ehh-Tq-y32" firstAttribute="leading" secondItem="Ycy-Jd-qTK" secondAttribute="leading" id="qg6-xa-7DY"/>
                                             <constraint firstAttribute="trailing" secondItem="9hs-wY-1mi" secondAttribute="trailing" constant="12" id="rab-Wc-SAH"/>
                                             <constraint firstAttribute="trailing" secondItem="BV8-QC-qpc" secondAttribute="trailing" id="tHJ-5f-i6y"/>
                                             <constraint firstItem="BV8-QC-qpc" firstAttribute="top" secondItem="EcB-p9-ysc" secondAttribute="bottom" constant="12" id="tim-70-OVz"/>
+                                            <constraint firstItem="MDF-Fn-8zR" firstAttribute="top" secondItem="ehh-Tq-y32" secondAttribute="bottom" constant="12" id="uxa-PJ-GEq"/>
+                                            <constraint firstAttribute="trailing" secondItem="MDF-Fn-8zR" secondAttribute="trailing" constant="12" id="yUj-BP-pS2"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -525,6 +533,7 @@
                         <outlet property="lblTodayHijriDate" destination="r7O-oW-QuW" id="ycy-Um-3gC"/>
                         <outlet property="namazTimeCV" destination="BV8-QC-qpc" id="2Bc-A5-qqk"/>
                         <outlet property="newsCV" destination="ehh-Tq-y32" id="SVc-YC-8BS"/>
+                        <outlet property="newsPageControl" destination="MDF-Fn-8zR" id="pFs-a9-eji"/>
                         <outlet property="todayBtn" destination="zkU-cF-nBL" id="SSu-Np-04p"/>
                         <outlet property="todayBtnView" destination="beF-Tp-Rnt" id="nYp-WS-ViL"/>
                         <segue destination="OG4-Ug-2QN" kind="show" id="iUG-eP-OCs"/>
@@ -628,6 +637,9 @@
         <image name="calendar.badge.clock" catalog="system" width="128" height="108"/>
         <image name="ellipsis" catalog="system" width="128" height="37"/>
         <image name="tv" catalog="system" width="128" height="97"/>
+        <systemColor name="opaqueSeparatorColor">
+            <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

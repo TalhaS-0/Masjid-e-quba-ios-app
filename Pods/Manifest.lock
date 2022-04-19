@@ -126,6 +126,7 @@ PODS:
     - nanopb/encode (= 2.30908.0)
   - nanopb/decode (2.30908.0)
   - nanopb/encode (2.30908.0)
+  - OneSignalXCFramework (3.10.3)
   - PromisesObjC (2.0.0)
   - ScalingCarousel (3.2.0)
   - SKActivityIndicatorView (1.0.0)
@@ -143,6 +144,7 @@ DEPENDENCIES:
   - Firebase/Storage
   - IQKeyboardManagerSwift
   - Kingfisher (~> 5.15.7)
+  - OneSignalXCFramework (< 4.0, >= 3.0.0)
   - ScalingCarousel
   - SKActivityIndicatorView (~> 1.0.0)
 
@@ -169,6 +171,7 @@ SPEC REPOS:
     - Kingfisher
     - leveldb-library
     - nanopb
+    - OneSignalXCFramework
     - PromisesObjC
     - ScalingCarousel
     - SKActivityIndicatorView
@@ -195,10 +198,11 @@ SPEC CHECKSUMS:
   Kingfisher: a3c03d702433fa6cfedabb2bddbe076fb8f2e902
   leveldb-library: 50c7b45cbd7bf543c81a468fe557a16ae3db8729
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
+  OneSignalXCFramework: 4efd7bd68c2b14920955b3f14b5b75bbf8fb662c
   PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58
   ScalingCarousel: d40f0ce438af5cfb2225e2f723f7161597961128
   SKActivityIndicatorView: 81c123380127ad497f9b57cd4d11347e40ab3427
 
-PODFILE CHECKSUM: 87e6d5c4d698c6c4548d9c84d8f8511bc8c9c5bd
+PODFILE CHECKSUM: 2cab55afc009119db7d8ab7b5dbe35f25dab9b92
 
 COCOAPODS: 1.11.2
