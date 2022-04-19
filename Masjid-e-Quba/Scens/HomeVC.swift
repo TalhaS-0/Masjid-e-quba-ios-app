@@ -11,6 +11,7 @@ import Firebase
 import ANActivityIndicator
 import ScalingCarousel
 import CenteredCollectionView
+import WidgetKit
 
 
 class HomeVC: BaseVC {
@@ -69,12 +70,14 @@ class HomeVC: BaseVC {
         // Modify the collectionView's decelerationRate (REQURED)
         namazTimeCV.decelerationRate = UIScrollView.DecelerationRate.fast
         centeredCollectionViewFlowLayout.itemSize = CGSize(
-            width: namazTimeCV.frame.width,
+            width: view.frame.width,
             height: namazTimeCV.frame.height
         )
         // Configure the optional inter item spacing (OPTIONAL)
-        centeredCollectionViewFlowLayout.minimumLineSpacing = 50
+        centeredCollectionViewFlowLayout.minimumLineSpacing = 20
         
+        navigationController?.navigationBar.prefersLargeTitles = true
+
         lblTodayDate.text = getCurrentDate_Month_Year()
         lblTodayHijriDate.text = getCurrentHijriDate()
         currentDate = getCurrentDate()
@@ -108,14 +111,11 @@ class HomeVC: BaseVC {
         self.namazTimeCV.isPagingEnabled = false
 
         self.namazTimeCV.scrollToItem(at: IndexPath(item: (Int(self.currentDate)! - 1), section: (Int(self.currentMonth)! - 1)), at: .centeredHorizontally, animated: false)
-//        self.namazTimeCV.isPagingEnabled = true
 
 //        self.namazTimeCV.reloadItems(at: [IndexPath.init(row: Int(self.currentDate)!, section: Int(self.currentMonth)!)])
 //
-//        self.namazTimeCV.isPagingEnabled = false
 
         self.namazTimeCV.scrollToItem(at: IndexPath(item: (Int(self.currentDate)! - 1), section: (Int(self.currentMonth)! - 1)), at: .centeredHorizontally, animated: false)
-//        self.namazTimeCV.isPagingEnabled = true
 
     }
     @IBAction func actionTodayTime(_ sender: Any) {
@@ -161,15 +161,16 @@ class HomeVC: BaseVC {
             dateFormatter.dateFormat = "dd"
             self?.selectedDate = dateFormatter.string(from: date)
             debugPrint(selectedDate)
-            debugPrint(self?.selectedMonth!)
-            debugPrint(self?.selectedYear!)
+            debugPrint(self?.selectedMonth! ?? "")
+            debugPrint(self?.selectedYear! ?? "")
             
             if self?.selectedYear != self?.currentYear {
                 self?.showAlert(title: ERROR, message: "Please select current year only")
             } else {
                 
-                self?.namazTimeCV.scrollToItem(at: IndexPath(item: Int((self?.selectedDate!)!)!, section: Int((self?.selectedMonth!)!)!), at: .centeredVertically, animated: false)
-                self?.namazTimeCV.scrollToItem(at: IndexPath(item: Int((self?.selectedDate!)!)!, section: Int((self?.selectedMonth!)!)!), at: .centeredVertically, animated: false)
+                self?.namazTimeCV.isPagingEnabled = false
+                self?.namazTimeCV.scrollToItem(at: IndexPath(item: Int((self?.selectedDate!)!)! - 1, section: Int((self?.selectedMonth!)!)! - 1), at: .centeredHorizontally, animated: false)
+                self?.namazTimeCV.scrollToItem(at: IndexPath(item: Int((self?.selectedDate!)!)! - 1, section: Int((self?.selectedMonth!)!)! - 1), at: .centeredHorizontally, animated: false)
 
 //                let selectedMonth = self?.CalendarDict[self?.selectedMonth!] as! NSDictionary
 //                debugPrint(selectedMonth)
@@ -203,13 +204,80 @@ class HomeVC: BaseVC {
 
 //                self.TodayTiming = currentDate!
 //                self.SetUpNamazTimings(self.TodayTiming)
-                
-                self.hideIndicator()
+                //update widget
+                if let userDefaults = UserDefaults(suiteName: "group.com.ATSO.Masjid-e-Quba"){
+                    let currentHour = Calendar.current.component(.hour, from: Date())
+                    print("currentHour", currentHour)
+                    let fajarStart = (currentDate?[Namaz.fajarStart.rawValue] as! String)
+                    let fajarJamat = (currentDate?[Namaz.fajar.rawValue] as! String)
+                    let zhrStart = (currentDate?[Namaz.zuharStart.rawValue] as! String)
+                    let zhrJamat = (currentDate?[Namaz.zuhar.rawValue] as! String)
 
+                    let asrStart = (currentDate?[Namaz.asarStart.rawValue] as! String)
+                    let asarJamat = (currentDate?[Namaz.asar.rawValue] as! String)
+
+                    let magribStart = (currentDate?[Namaz.maghribStart.rawValue] as! String)
+                    let magribJamat = (currentDate?[Namaz.maghrib.rawValue] as! String)
+
+                    let ishaStart = (currentDate?[Namaz.ishaStart.rawValue] as! String)
+                    let ishaJamat = (currentDate?[Namaz.isha.rawValue] as! String)
+                    
+                    let fajarHour = Int(String(fajarStart.prefix(2))) ?? 0
+                    let zuharHour = Int(String(zhrStart.prefix(2))) ?? 0
+                    let asarHour = Int(String(asrStart.prefix(2))) ?? 0
+                    let magribHour = Int(String(magribStart.prefix(2))) ?? 0
+                    let ishaHour = Int(String(ishaStart.prefix(2))) ?? 0
+
+                    if fajarHour > currentHour{
+                        userDefaults.setValue("Fajar", forKey: "NamazName")
+                        userDefaults.setValue(fajarStart, forKey: "StartTime")
+                        userDefaults.setValue(fajarJamat, forKey: "JamatTime")
+                    }else if zuharHour > currentHour{
+                        userDefaults.setValue("Zuhar", forKey: "NamazName")
+                        userDefaults.setValue(zhrStart, forKey: "StartTime")
+                        userDefaults.setValue(zhrJamat, forKey: "JamatTime")
+                    }else if asarHour > currentHour{
+                        userDefaults.setValue("Asar", forKey: "NamazName")
+                        userDefaults.setValue(asrStart, forKey: "StartTime")
+                        userDefaults.setValue(asarJamat, forKey: "JamatTime")
+                    }else if magribHour > currentHour{
+                        userDefaults.setValue("Magrib", forKey: "NamazName")
+                        userDefaults.setValue(magribStart, forKey: "StartTime")
+                        userDefaults.setValue(magribJamat, forKey: "JamatTime")
+                    }else if ishaHour > currentHour{
+                        userDefaults.setValue("Isha", forKey: "NamazName")
+                        userDefaults.setValue(ishaStart, forKey: "StartTime")
+                        userDefaults.setValue(ishaJamat, forKey: "JamatTime")
+                    }else{
+                        let nextDate = Int(self.currentDate!)! + 1
+                        let nextDay = currentMonth![nextDate] as? NSDictionary
+                        let fajarStart = (nextDay?[Namaz.fajarStart.rawValue] as! String)
+                        let fajarJamat = (nextDay?[Namaz.fajar.rawValue] as! String)
+                        userDefaults.setValue("Fajar", forKey: "NamazName")
+                        userDefaults.setValue(fajarStart, forKey: "StartTime")
+                        userDefaults.setValue(fajarJamat, forKey: "JamatTime")
+                        
+                    }
+                    print("NamazName",userDefaults.value(forKey: "NamazName") as? String ?? "No Name")
+                    
+                    if #available(iOS 14.0, *) {
+                        WidgetCenter.shared.reloadAllTimelines()
+                    } else {
+                        print("Older version of ios")
+                    }
+                }else{
+                    print("Update widget error")
+                }
+                    
+                
                 DispatchQueue.main.async {
                     self.namazTimeCV.reloadData()
                     self.scrollToTodayTimings()
+                    self.hideIndicator()
+
                 }
+
+                
                 
 //                for eachSnap in value {
 //                    guard let eachUserDict = eachSnap.value as? Dictionary<String,AnyObject> else { return }
@@ -310,9 +378,6 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource, UIScroll
         if collectionView == newsCV{
             return newsModel.count
         }else{
-//            print("getNoOfDaysInMonth ", getNoOfDaysInMonth(year: 2022, month: Int(months[section])!))
-//            print("getNoOfDaysInMonth Section ", section)
-
             return getNoOfDaysInMonth(year: 2022, month: Int(months[section])!)
         }
     }
@@ -333,8 +398,8 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource, UIScroll
             cell.shadowView.layer.shadowRadius = 4
             cell.shadowView.layer.cornerRadius = 4
             
-//            cell.setNeedsLayout()
-//            cell.layoutIfNeeded()
+            cell.setNeedsLayout()
+            cell.layoutIfNeeded()
             
             return cell
         }else{
@@ -344,8 +409,7 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource, UIScroll
                 debugPrint("currentMonthhh ", indexPath.section + 1)
                 if let currentDate = currentMonth[days[indexPath.row]] as? NSDictionary{
                     debugPrint("currentDateee ", indexPath.row + 1)
-//                    self.TodayTiming = currentDate
-//                    self.SetUpNamazTimings(self.TodayTiming)
+
                     //set date
                     let dateString = "\(days[indexPath.row])/\(months[indexPath.section])/\(2022)"
                     let dateFormatter = DateFormatter()

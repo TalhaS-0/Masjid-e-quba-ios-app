@@ -16,6 +16,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window:UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        
+        let navigationBarAppearace = UINavigationBar.appearance()
+//
+//        navigationBarAppearace.barTintColor = UIColor.systemBlue
+//        navigationBarAppearace.backgroundColor = UIColor.systemBlue
+//
+        navigationBarAppearace.tintColor = UIColor.black
+        if #available(iOS 13.0, *) {
+                    navigationBarAppearace.tintColor = UITraitCollection.current.userInterfaceStyle == .dark ? .white : .black
+          }
+//        navigationBarAppearace.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+//        navigationBarAppearace.titleTextAttributes = [.foregroundColor:UIColor.white]
+        
         // Override point for customization after application launch.
         FirebaseApp.configure()
         IQKeyboardManager.shared.enable = true

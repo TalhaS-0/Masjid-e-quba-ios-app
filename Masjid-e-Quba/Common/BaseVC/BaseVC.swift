@@ -235,7 +235,6 @@ class BaseVC: UIViewController {
         let dateString = formatter.string(from: now)
         return dateString
     }
-    
     func getCurrentMonth() -> String {
         let now = Date()
         let formatter = DateFormatter()
