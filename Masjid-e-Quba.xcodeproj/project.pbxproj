@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		2F4362AB280D5F49002CB349 /* TimeCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F4362AA280D5F49002CB349 /* TimeCVC.swift */; };
 		2F4362AD280D7F11002CB349 /* RPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F4362AC280D7F11002CB349 /* RPicker.swift */; };
+		2F666BE62810342F00487319 /* WelcomeCollectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F666BE42810342F00487319 /* WelcomeCollectionVC.swift */; };
+		2F666BE72810342F00487319 /* WelcomeCollectionVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F666BE52810342F00487319 /* WelcomeCollectionVC.xib */; };
+		2F79C8E228100F5100EA1111 /* WelcomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F79C8E128100F5100EA1111 /* WelcomeVC.swift */; };
+		2F79C8E5281011F100EA1111 /* WelcomeCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F79C8E4281011F100EA1111 /* WelcomeCVC.swift */; };
 		2FB70B8D280E9F8F0000349B /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FB70B8C280E9F8F0000349B /* WidgetKit.framework */; };
 		2FB70B8F280E9F8F0000349B /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FB70B8E280E9F8F0000349B /* SwiftUI.framework */; };
 		2FB70B92280E9F8F0000349B /* NextNamazTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB70B91280E9F8F0000349B /* NextNamazTime.swift */; };
@@ -83,6 +87,10 @@
 		2F2ABD3D280EAA110061C1DD /* NextNamazTimeExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NextNamazTimeExtension.entitlements; sourceTree = "<group>"; };
 		2F4362AA280D5F49002CB349 /* TimeCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeCVC.swift; sourceTree = "<group>"; };
 		2F4362AC280D7F11002CB349 /* RPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RPicker.swift; sourceTree = "<group>"; };
+		2F666BE42810342F00487319 /* WelcomeCollectionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeCollectionVC.swift; sourceTree = "<group>"; };
+		2F666BE52810342F00487319 /* WelcomeCollectionVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WelcomeCollectionVC.xib; sourceTree = "<group>"; };
+		2F79C8E128100F5100EA1111 /* WelcomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeVC.swift; sourceTree = "<group>"; };
+		2F79C8E4281011F100EA1111 /* WelcomeCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeCVC.swift; sourceTree = "<group>"; };
 		2F7F0057280E9ABD009F9C00 /* Masjid-e-Quba.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Masjid-e-Quba.entitlements"; sourceTree = "<group>"; };
 		2FB70B8B280E9F8F0000349B /* NextNamazTimeExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = NextNamazTimeExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		2FB70B8C280E9F8F0000349B /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
@@ -165,6 +173,18 @@
 				68CC5C749C4CF9BA1EBE6F51 /* Pods_OneSignalNotificationServiceExtension.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2F79C8E3281011C500EA1111 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				2F4362AA280D5F49002CB349 /* TimeCVC.swift */,
+				43BF50C127A2DB2600A8C1A4 /* NewsCollectionViewCell.swift */,
+				2F79C8E4281011F100EA1111 /* WelcomeCVC.swift */,
+				2F666BE42810342F00487319 /* WelcomeCollectionVC.swift */,
+				2F666BE52810342F00487319 /* WelcomeCollectionVC.xib */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		2FB70B90280E9F8F0000349B /* NextNamazTime */ = {
@@ -355,12 +375,12 @@
 		439E222E279FD7AD00AF550B /* Scens */ = {
 			isa = PBXGroup;
 			children = (
+				2F79C8E3281011C500EA1111 /* Cells */,
 				439E21F4279FCF1B00AF550B /* HomeVC.swift */,
 				439E223327A07DE200AF550B /* Model.swift */,
-				43BF50C127A2DB2600A8C1A4 /* NewsCollectionViewCell.swift */,
 				43B83A3227A3C38C007973F7 /* NewsVC.swift */,
 				43B83A3427A3E208007973F7 /* LiveStreamVC.swift */,
-				2F4362AA280D5F49002CB349 /* TimeCVC.swift */,
+				2F79C8E128100F5100EA1111 /* WelcomeVC.swift */,
 			);
 			path = Scens;
 			sourceTree = "<group>";
@@ -498,6 +518,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2F666BE72810342F00487319 /* WelcomeCollectionVC.xib in Resources */,
 				439E21FD279FCF1D00AF550B /* LaunchScreen.storyboard in Resources */,
 				439E223227A0756000AF550B /* GoogleService-Info.plist in Resources */,
 				439E21FA279FCF1D00AF550B /* Assets.xcassets in Resources */,
@@ -612,6 +633,7 @@
 			files = (
 				439E222C279FD4FA00AF550B /* ApiManager.swift in Sources */,
 				439E2228279FD4F300AF550B /* Extension.swift in Sources */,
+				2F79C8E5281011F100EA1111 /* WelcomeCVC.swift in Sources */,
 				439E2222279FD4F300AF550B /* ShadowView.swift in Sources */,
 				2FB70B98280E9F910000349B /* NextNamazTime.intentdefinition in Sources */,
 				439E2224279FD4F300AF550B /* BaseVC.swift in Sources */,
@@ -625,12 +647,14 @@
 				439E221F279FD4F300AF550B /* CustomPicker.swift in Sources */,
 				439E221D279FD4F300AF550B /* RoundOffImageView.swift in Sources */,
 				2F4362AB280D5F49002CB349 /* TimeCVC.swift in Sources */,
+				2F79C8E228100F5100EA1111 /* WelcomeVC.swift in Sources */,
 				439E2226279FD4F300AF550B /* Constant.swift in Sources */,
 				439E223427A07DE200AF550B /* Model.swift in Sources */,
 				439E221E279FD4F300AF550B /* CustomTextField.swift in Sources */,
 				439E2225279FD4F300AF550B /* Enums.swift in Sources */,
 				2F4362AD280D7F11002CB349 /* RPicker.swift in Sources */,
 				439E2227279FD4F300AF550B /* PhotoLibraryExtension.swift in Sources */,
+				2F666BE62810342F00487319 /* WelcomeCollectionVC.swift in Sources */,
 				43B83A3527A3E208007973F7 /* LiveStreamVC.swift in Sources */,
 				439E2221279FD4F300AF550B /* CornerView.swift in Sources */,
 			);
