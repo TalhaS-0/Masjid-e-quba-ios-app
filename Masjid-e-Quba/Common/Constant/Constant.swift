@@ -36,6 +36,7 @@ let USER_NAME = "UserName"
 let PASSWORD = "password"
 let CELL = "cell"
 let FILE_PATH = "filePath"
+let IS_FIRST_TIME = "isFirstTime"
 
 
 // URL

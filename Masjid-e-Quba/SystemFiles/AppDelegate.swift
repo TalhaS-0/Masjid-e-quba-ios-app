@@ -17,6 +17,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window:UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        //MARK: RootViewController
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+        
+        self.window?.rootViewController = RootViewControllerFactory().rootViewController
+        self.window?.makeKeyAndVisible()
         
         //MARK: Navbar design
         let navigationBarAppearace = UINavigationBar.appearance()

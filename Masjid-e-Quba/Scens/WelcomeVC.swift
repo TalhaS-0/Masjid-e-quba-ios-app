@@ -19,7 +19,10 @@ class WelcomeVC: UIViewController {
     @IBOutlet weak var pageControl: UIPageControl!
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        //After onboarding Screen
+        UserDefaults.standard.set(true, forKey: IS_FIRST_TIME)
+        UserDefaults.standard.synchronize()
+        
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(UINib(nibName: "WelcomeCollectionVC", bundle: nil), forCellWithReuseIdentifier: "WelcomeCVC")

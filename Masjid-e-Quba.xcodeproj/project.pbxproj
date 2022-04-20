@@ -11,6 +11,7 @@
 		2F4362AD280D7F11002CB349 /* RPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F4362AC280D7F11002CB349 /* RPicker.swift */; };
 		2F666BE62810342F00487319 /* WelcomeCollectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F666BE42810342F00487319 /* WelcomeCollectionVC.swift */; };
 		2F666BE72810342F00487319 /* WelcomeCollectionVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F666BE52810342F00487319 /* WelcomeCollectionVC.xib */; };
+		2F666BE928107FB500487319 /* RootViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F666BE828107FB500487319 /* RootViewControllerFactory.swift */; };
 		2F79C8E228100F5100EA1111 /* WelcomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F79C8E128100F5100EA1111 /* WelcomeVC.swift */; };
 		2F79C8E5281011F100EA1111 /* WelcomeCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F79C8E4281011F100EA1111 /* WelcomeCVC.swift */; };
 		2FB70B8D280E9F8F0000349B /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FB70B8C280E9F8F0000349B /* WidgetKit.framework */; };
@@ -89,6 +90,7 @@
 		2F4362AC280D7F11002CB349 /* RPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RPicker.swift; sourceTree = "<group>"; };
 		2F666BE42810342F00487319 /* WelcomeCollectionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeCollectionVC.swift; sourceTree = "<group>"; };
 		2F666BE52810342F00487319 /* WelcomeCollectionVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WelcomeCollectionVC.xib; sourceTree = "<group>"; };
+		2F666BE828107FB500487319 /* RootViewControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewControllerFactory.swift; sourceTree = "<group>"; };
 		2F79C8E128100F5100EA1111 /* WelcomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeVC.swift; sourceTree = "<group>"; };
 		2F79C8E4281011F100EA1111 /* WelcomeCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeCVC.swift; sourceTree = "<group>"; };
 		2F7F0057280E9ABD009F9C00 /* Masjid-e-Quba.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Masjid-e-Quba.entitlements"; sourceTree = "<group>"; };
@@ -317,6 +319,7 @@
 				439E2214279FD4F300AF550B /* BaseVC */,
 				439E2216279FD4F300AF550B /* Enums */,
 				439E2218279FD4F300AF550B /* Constant */,
+				2F666BE828107FB500487319 /* RootViewControllerFactory.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -636,6 +639,7 @@
 				2F79C8E5281011F100EA1111 /* WelcomeCVC.swift in Sources */,
 				439E2222279FD4F300AF550B /* ShadowView.swift in Sources */,
 				2FB70B98280E9F910000349B /* NextNamazTime.intentdefinition in Sources */,
+				2F666BE928107FB500487319 /* RootViewControllerFactory.swift in Sources */,
 				439E2224279FD4F300AF550B /* BaseVC.swift in Sources */,
 				43BF50C227A2DB2600A8C1A4 /* NewsCollectionViewCell.swift in Sources */,
 				439E21F5279FCF1B00AF550B /* HomeVC.swift in Sources */,

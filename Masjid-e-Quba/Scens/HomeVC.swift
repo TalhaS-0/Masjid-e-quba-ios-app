@@ -56,6 +56,9 @@ class HomeVC: BaseVC {
         // Do any additional setup after loading the view.
         self.ref = Database.database().reference()
         self.initView()
+        
+//        self.namazTimeCV.addObserver(self, forKeyPath: "contentSize", options: NSKeyValueObservingOptions.old, context: nil)
+//        showIndicator()
     }
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
@@ -66,6 +69,15 @@ class HomeVC: BaseVC {
             $0.transform = CGAffineTransform(scaleX: 1.6, y: 1.6)
         }
     }
+//    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+//        if let observedObject = object as? UICollectionView, observedObject == self.namazTimeCV {
+//            self.hideIndicator()
+//        }
+//    }
+//    override func viewWillDisappear(_ animated: Bool) {
+//        super.viewWillDisappear(animated)
+//        self.namazTimeCV.removeObserver(self, forKeyPath: "contentSize")
+//    }
     //MARK: - Intialize the view objects
     private func initView() {
         
@@ -126,7 +138,7 @@ class HomeVC: BaseVC {
 //        self.namazTimeCV.reloadItems(at: [IndexPath.init(row: Int(self.currentDate)!, section: Int(self.currentMonth)!)])
 //
 
-        self.namazTimeCV.scrollToItem(at: IndexPath(item: (Int(self.currentDate)! - 1), section: (Int(self.currentMonth)! - 1)), at: .centeredHorizontally, animated: false)
+//        self.namazTimeCV.scrollToItem(at: IndexPath(item: (Int(self.currentDate)! - 1), section: (Int(self.currentMonth)! - 1)), at: .centeredHorizontally, animated: false)
 
     }
     @IBAction func actionTodayTime(_ sender: Any) {
@@ -184,7 +196,7 @@ class HomeVC: BaseVC {
                 
                 self?.namazTimeCV.isPagingEnabled = false
                 self?.namazTimeCV.scrollToItem(at: IndexPath(item: Int((self?.selectedDate!)!)! - 1, section: Int((self?.selectedMonth!)!)! - 1), at: .centeredHorizontally, animated: false)
-                self?.namazTimeCV.scrollToItem(at: IndexPath(item: Int((self?.selectedDate!)!)! - 1, section: Int((self?.selectedMonth!)!)! - 1), at: .centeredHorizontally, animated: false)
+//                self?.namazTimeCV.scrollToItem(at: IndexPath(item: Int((self?.selectedDate!)!)! - 1, section: Int((self?.selectedMonth!)!)! - 1), at: .centeredHorizontally, animated: false)
 
 //                let selectedMonth = self?.CalendarDict[self?.selectedMonth!] as! NSDictionary
 //                debugPrint(selectedMonth)
@@ -370,7 +382,8 @@ class HomeVC: BaseVC {
             self.saveFilePath(path)
             debugPrint(self.getFilePath())
         } errorCallBack: { error in
-            self.showAlert(title: ERROR, message: error)
+//            self.showAlert(title: ERROR, message: error)
+            print("File saved already")
         }
     }
     fileprivate func getNoOfDaysInMonth(year: Int, month: Int) -> Int{

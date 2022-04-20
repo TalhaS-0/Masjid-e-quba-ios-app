@@ -89,7 +89,7 @@
                                                         <color key="value" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </userDefinedRuntimeAttribute>
                                                     <userDefinedRuntimeAttribute type="color" keyPath="endColor">
-                                                        <color key="value" red="0.1568430066" green="0.1568765342" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="value" systemColor="systemBlueColor"/>
                                                     </userDefinedRuntimeAttribute>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="endPointY">
                                                         <real key="value" value="1"/>
@@ -617,7 +617,7 @@
         <!--Navigation Controller-->
         <scene sceneID="iBX-nI-jAQ">
             <objects>
-                <navigationController storyboardIdentifier="HomeNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="GEq-1r-HU2" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="HomeNC" automaticallyAdjustsScrollViewInsets="NO" id="GEq-1r-HU2" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="MAq-wM-vWT"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="4Vr-ON-Wyw">
@@ -636,7 +636,7 @@
         <!--WelcomeVC-->
         <scene sceneID="Hj9-Zd-6Nl">
             <objects>
-                <viewController id="56v-QC-rY8" customClass="WelcomeVC" customModule="Masjid_e_Quba" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="WelcomeVC" id="56v-QC-rY8" customClass="WelcomeVC" customModule="Masjid_e_Quba" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="TBv-d0-1mm">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -707,6 +707,9 @@
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBlueColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
