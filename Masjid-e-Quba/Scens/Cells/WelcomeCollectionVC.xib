@@ -22,35 +22,33 @@
                         <rect key="frame" x="0.0" y="0.0" width="371" height="473"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="twc-SM-Wpu">
-                                <rect key="frame" x="0.0" y="0.0" width="371" height="385"/>
+                                <rect key="frame" x="10.5" y="0.0" width="350" height="385"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="371" id="m7E-gD-Pcj"/>
                                     <constraint firstAttribute="height" constant="385" id="n3z-9r-drp"/>
+                                    <constraint firstAttribute="width" constant="350" id="r7V-zM-DKk"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5sO-Zr-3Az">
-                                <rect key="frame" x="141" y="397" width="89" height="27"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <rect key="frame" x="140" y="397" width="91.5" height="27"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="22"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A71-wn-wZT">
-                                <rect key="frame" x="164.5" y="436" width="42" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
+                                <rect key="frame" x="165.5" y="424" width="40.5" height="19.5"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
+                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="twc-SM-Wpu" secondAttribute="trailing" id="1hV-SA-zvH"/>
-                            <constraint firstItem="twc-SM-Wpu" firstAttribute="leading" secondItem="Fqd-w6-zI7" secondAttribute="leading" id="5xH-m0-nCt"/>
                             <constraint firstItem="5sO-Zr-3Az" firstAttribute="top" secondItem="twc-SM-Wpu" secondAttribute="bottom" constant="12" id="IRi-R2-7Xv"/>
                             <constraint firstItem="A71-wn-wZT" firstAttribute="centerX" secondItem="Fqd-w6-zI7" secondAttribute="centerX" id="LVy-gL-kls"/>
-                            <constraint firstAttribute="bottom" secondItem="A71-wn-wZT" secondAttribute="bottom" constant="16" id="Ouk-jp-Md3"/>
                             <constraint firstItem="twc-SM-Wpu" firstAttribute="top" secondItem="Fqd-w6-zI7" secondAttribute="top" id="U2H-BN-wcL"/>
-                            <constraint firstItem="A71-wn-wZT" firstAttribute="top" secondItem="5sO-Zr-3Az" secondAttribute="bottom" constant="12" id="kAz-v3-2UB"/>
+                            <constraint firstItem="A71-wn-wZT" firstAttribute="top" secondItem="5sO-Zr-3Az" secondAttribute="bottom" id="kAz-v3-2UB"/>
                             <constraint firstItem="5sO-Zr-3Az" firstAttribute="centerX" secondItem="Fqd-w6-zI7" secondAttribute="centerX" id="mwf-DE-c87"/>
+                            <constraint firstItem="twc-SM-Wpu" firstAttribute="centerX" secondItem="Fqd-w6-zI7" secondAttribute="centerX" id="oo7-iY-nLU"/>
                         </constraints>
                     </view>
                 </subviews>

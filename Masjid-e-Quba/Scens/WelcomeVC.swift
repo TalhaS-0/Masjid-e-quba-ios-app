@@ -71,10 +71,22 @@ extension WelcomeVC: UICollectionViewDelegate, UICollectionViewDataSource, UIScr
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "WelcomeCVC", for: indexPath) as! WelcomeCollectionVC
 
+        if indexPath.row == 0{
+            cell.imageView.image = UIImage(named: "logo21")
+            cell.welcomeLbl.text = "Welcome"
+            cell.textLbl.text = "to new Masjid-e-Quba App"
+        }else if indexPath.row == 1{
+            cell.imageView.image = UIImage(named: "scrn1")
+            cell.welcomeLbl.isHidden = true
+            cell.welcomeLbl.heightAnchor.constraint(equalToConstant: 0).isActive = true
+            cell.textLbl.text = "Swip left or right \nto browse the latest news"
+        }else{
+            cell.imageView.image = UIImage(named: "scrn3")
+            cell.welcomeLbl.isHidden = true
+            cell.welcomeLbl.heightAnchor.constraint(equalToConstant: 0).isActive = true
+            cell.textLbl.text = "Tap on date to access the calender"
+        }
         
-        cell.imageView.image = UIImage(named: "AppIcon")
-        cell.welcomeLbl.text = "Welcome"
-        cell.textLbl.text = "to new Masjid-e-Quba App"
         
         return cell
     }

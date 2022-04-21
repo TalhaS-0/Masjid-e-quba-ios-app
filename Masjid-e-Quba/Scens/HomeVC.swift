@@ -147,7 +147,6 @@ class HomeVC: BaseVC {
 
         }
         
-//        fetchNamazData()
     }
     
     @IBAction func actionLiveStream(_ sender: Any) {
@@ -237,6 +236,7 @@ class HomeVC: BaseVC {
                     self.hideIndicator()
 
                 }
+                
 
                 
                 
