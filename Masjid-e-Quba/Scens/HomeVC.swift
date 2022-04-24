@@ -219,8 +219,19 @@ class HomeVC: BaseVC {
             if let value = snapshot.value as? NSDictionary {
                 print("CalendarDict", value)
                 self.CalendarDict = value
+                
                 print("allKeysMonths", self.CalendarDict.allKeys)
-
+                if let userDefaults = UserDefaults(suiteName: "group.com.ATSO.Masjid-e-Quba.Widget"){
+                    userDefaults.setValue(self.CalendarDict, forKey: "CalendarDict")
+                    print("Saved Obj To Local")
+                    if #available(iOS 14.0, *) {
+                        WidgetCenter.shared.reloadAllTimelines()
+                    } else {
+                        print("Older version of ios")
+                    }
+                }else{
+                    print("Error: Saving Obj To Local")
+                }
                 let currentMonth = value[self.currentMonth!] as? NSDictionary
 //                debugPrint("currentMonth ", currentMonth?["32"])
                 print("allKeysDays", currentMonth?.allKeys ?? 0)
@@ -228,7 +239,7 @@ class HomeVC: BaseVC {
 //                debugPrint("currentDate ",self.currentDate!)
                 print("allKeysADay", currentDate?.allKeys ?? 0)
 
-                self.updateWidget(currentDate, currentMonth)
+//                self.updateWidget(currentDate, currentMonth)
                 
                 DispatchQueue.main.async {
                     self.namazTimeCV.reloadData()
@@ -270,91 +281,6 @@ class HomeVC: BaseVC {
         }
 }
     
-    fileprivate func updateWidget(_ currentDate: NSDictionary?, _ currentMonth: NSDictionary?) {
-        //update widget
-        if let userDefaults = UserDefaults(suiteName: "group.com.ATSO.Masjid-e-Quba"){
-            let currentHour = Calendar.current.component(.hour, from: Date())
-            print("currentHour", currentHour)
-            let fajarStart = (currentDate?[Namaz.fajarStart.rawValue] as! String)
-            let fajarJamat = (currentDate?[Namaz.fajar.rawValue] as! String)
-            let zhrStart = (currentDate?[Namaz.zuharStart.rawValue] as! String)
-            let zhrJamat = (currentDate?[Namaz.zuhar.rawValue] as! String)
-            
-            let asrStart = (currentDate?[Namaz.asarStart.rawValue] as! String)
-            let asarJamat = (currentDate?[Namaz.asar.rawValue] as! String)
-            
-            let magribStart = (currentDate?[Namaz.maghribStart.rawValue] as! String)
-            let magribJamat = (currentDate?[Namaz.maghrib.rawValue] as! String)
-            
-            let ishaStart = (currentDate?[Namaz.ishaStart.rawValue] as! String)
-            let ishaJamat = (currentDate?[Namaz.isha.rawValue] as! String)
-            
-            let fajarHour = Int(String(fajarStart.prefix(2))) ?? 0
-            let zuharHour = Int(String(zhrStart.prefix(2))) ?? 0
-            let asarHour = Int(String(asrStart.prefix(2))) ?? 0
-            let magribHour = Int(String(magribStart.prefix(2))) ?? 0
-            let ishaHour = Int(String(ishaStart.prefix(2))) ?? 0
-            
-            if fajarHour > currentHour{
-                userDefaults.setValue("Fajar", forKey: "NamazName")
-                userDefaults.setValue(fajarStart, forKey: "StartTime")
-                userDefaults.setValue(fajarJamat, forKey: "JamatTime")
-            }else if zuharHour > currentHour{
-                userDefaults.setValue("Zuhar", forKey: "NamazName")
-                userDefaults.setValue(zhrStart, forKey: "StartTime")
-                userDefaults.setValue(zhrJamat, forKey: "JamatTime")
-            }else if asarHour > currentHour{
-                userDefaults.setValue("Asar", forKey: "NamazName")
-                userDefaults.setValue(asrStart, forKey: "StartTime")
-                userDefaults.setValue(asarJamat, forKey: "JamatTime")
-            }else if magribHour > currentHour{
-                userDefaults.setValue("Magrib", forKey: "NamazName")
-                userDefaults.setValue(magribStart, forKey: "StartTime")
-                userDefaults.setValue(magribJamat, forKey: "JamatTime")
-            }else if ishaHour > currentHour{
-                userDefaults.setValue("Isha", forKey: "NamazName")
-                userDefaults.setValue(ishaStart, forKey: "StartTime")
-                userDefaults.setValue(ishaJamat, forKey: "JamatTime")
-            }else{
-                let nextDate = "\(Int(self.currentDate!)! + 1)"
-                if let nextDay = currentMonth![nextDate] as? NSDictionary{
-                    let fajarStart = (nextDay[Namaz.fajarStart.rawValue] as! String)
-                    let fajarJamat = (nextDay[Namaz.fajar.rawValue] as! String)
-                    userDefaults.setValue("Fajar", forKey: "NamazName")
-                    userDefaults.setValue(fajarStart, forKey: "StartTime")
-                    userDefaults.setValue(fajarJamat, forKey: "JamatTime")
-                }else{
-                    print("next day fajar time error")
-                }
-                
-                
-            }
-            print("NamazName",userDefaults.value(forKey: "NamazName") as? String ?? "No Name")
-            
-            if #available(iOS 14.0, *) {
-                WidgetCenter.shared.reloadAllTimelines()
-            } else {
-                print("Older version of ios")
-            }
-        }else{
-            print("Update widget error")
-        }
-    }
-    
-    //MARK: - SetupData in field
-//    private func SetUpNamazTimings(_ schedule: NSDictionary) {
-//        lblFajrStart.text = (schedule[Namaz.fajarStart.rawValue] as! String)
-//        lblFajrJamat.text = (schedule[Namaz.fajar.rawValue] as! String)
-//        lblSunriseTime.text = (schedule[Namaz.sunRise.rawValue] as! String)
-//        lblZhrStart.text = (schedule[Namaz.zuharStart.rawValue] as! String)
-//        lblZhrJamat.text = (schedule[Namaz.zuhar.rawValue] as! String)
-//        lblAsrStart.text = (schedule[Namaz.asarStart.rawValue] as! String)
-//        lblAsrJamat.text = (schedule[Namaz.asar.rawValue] as! String)
-//        lblMaghribStart.text = (schedule[Namaz.maghribStart.rawValue] as! String)
-//        lblMaghribJamat.text = (schedule[Namaz.maghrib.rawValue] as! String)
-//        lblIshaStart.text = (schedule[Namaz.ishaStart.rawValue] as! String)
-//        lblIshaJamat.text = (schedule[Namaz.isha.rawValue] as! String)
-//    }
     
     private func fetchNewsFeed() {
         showIndicator()
