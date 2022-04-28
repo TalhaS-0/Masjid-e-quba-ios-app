@@ -160,6 +160,7 @@ class HomeVC: BaseVC {
             self.showAlert(title: "Masjid Details", message: "Masjid-e-Quba \n 70-72 Cazenove Road \n London \n N16 6AA \n \n 020 8806 6540 \n www.mequba.com \n info@mequba.com \n \n Live Streaming \n http://www.mequba.com/live-streaming/ \n \n Radio: 454.025")
         } updateTimesCallBack: {
             self.DownloadFile()
+            self.fetchNamazData()
 
         }
     }
@@ -269,9 +270,11 @@ class HomeVC: BaseVC {
 //                guard let snapshot = snapshot.children.allObjects as? [DataSnapshot] else { return }
 //                 debugPrint(snapshot)
              
-            DispatchQueue.main.async {
-                 self.ActivityIndicatorDismiss()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                // your code here
+                self.ActivityIndicatorDismiss()
             }
+            
         }) { error in
             
            DispatchQueue.main.async {

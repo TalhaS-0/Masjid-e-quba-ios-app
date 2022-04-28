@@ -12,14 +12,15 @@ import Intents
 struct NamazTimeline: TimelineProvider {
     
     func placeholder(in context: Context) -> NamazEntry {
-        NamazEntry(date: Date(), namazName: "Fajar", startTime: "04:00", jamatTime: "04:30")
+        NamazEntry(date: Date(), namazName: "Fajr", startTime: "04:00", jamatTime: "04:30")
     }
 
     func getSnapshot(in context: Context, completion: @escaping (NamazEntry) -> Void) {
-        let entry = NamazEntry(date: Date(), namazName: "Fajar", startTime: "04:00", jamatTime: "04:30")
+        let entry = NamazEntry(date: Date(), namazName: "Fajr", startTime: "04:00", jamatTime: "04:30")
 
         completion(entry)
     }
+    
     
     func getTimeline(in context: Context, completion: @escaping (Timeline<NamazEntry>) -> Void){
         var entries: [NamazEntry] = []
@@ -47,7 +48,7 @@ struct NamazTimeline: TimelineProvider {
             let todayTimings = monthTimings?[currDate] as? NSDictionary
             
             let currentHour = Calendar.current.component(.hour, from: Date())
-            let currentMinutes = Calendar.current.component(.minute, from: Date())
+//            let currentMinutes = Calendar.current.component(.minute, from: Date())
 
             print("currentHour", currentHour)
             let fajarStart = (todayTimings?[Namaz.fajarStart.rawValue] as! String)
@@ -65,108 +66,57 @@ struct NamazTimeline: TimelineProvider {
             let ishaJamat = (todayTimings?[Namaz.isha.rawValue] as! String)
             
             let fajarHour = Int(String(fajarJamat.prefix(2))) ?? 0
-            let fajarMinutes = Int(String(fajarJamat.suffix(2))) ?? 0
+//            let fajarMinutes = Int(String(fajarJamat.suffix(2))) ?? 0
             
             let zuharHour = Int(String(zhrJamat.prefix(2))) ?? 0
-            let zuharMinutes = Int(String(zhrJamat.suffix(2))) ?? 0
+//            let zuharMinutes = Int(String(zhrJamat.suffix(2))) ?? 0
             
             let asarHour = Int(String(asarJamat.prefix(2))) ?? 0
-            let asarMinutes = Int(String(asarJamat.suffix(2))) ?? 0
+//            let asarMinutes = Int(String(asarJamat.suffix(2))) ?? 0
             
             let magribHour = Int(String(magribJamat.prefix(2))) ?? 0
-            let magribMinutes = Int(String(magribJamat.suffix(2))) ?? 0
+//            let magribMinutes = Int(String(magribJamat.suffix(2))) ?? 0
 
             let ishaHour = Int(String(ishaJamat.prefix(2))) ?? 0
-            let ishaMinutes = Int(String(ishaJamat.suffix(2))) ?? 0
+//            let ishaMinutes = Int(String(ishaJamat.suffix(2))) ?? 0
 
             
             
-            if fajarHour > currentHour{
-                //Only show this namaz until jamat time
-                if fajarMinutes > currentMinutes{
-                    namazName = "Fajar"
-                    startTime = fajarStart
-                    jamatTime = fajarJamat
-                }else{
-                    namazName = "Zuhar"
-                    startTime = zhrStart
-                    jamatTime = zhrJamat
-                }
-            }else if zuharHour > currentHour{
-                //Only show this namaz until jamat time
-                if zuharMinutes > currentMinutes{
-                    namazName = "Zuhar"
-                    startTime = zhrStart
-                    jamatTime = zhrJamat
-                }else{
-                    namazName = "Asar"
-                    startTime = asrStart
-                    jamatTime = asarJamat
-                }
-            }else if asarHour > currentHour{
-                //Only show this namaz until jamat time
-                if asarMinutes > currentMinutes{
-                    namazName = "Asar"
-                    startTime = asrStart
-                    jamatTime = asarJamat
-                }else{
-                    namazName = "Magrib"
-                    startTime = magribStart
-                    jamatTime = magribJamat
-                }
-            }else if magribHour > currentHour{
-                //Only show this namaz until jamat time
-                if magribMinutes > currentMinutes{
-                    namazName = "Magrib"
-                    startTime = magribStart
-                    jamatTime = magribJamat
-                }else{
-                    namazName = "Isha"
-                    startTime = ishaStart
-                    jamatTime = ishaJamat
-                }
+            if fajarHour >= currentHour{
+                namazName = "Fajr"
+                startTime = fajarStart
+                jamatTime = fajarJamat
                 
-            }else if ishaHour > currentHour{
-                //Only show this namaz until jamat time
-                if ishaMinutes > currentMinutes{
-                    namazName = "Isha"
-                    startTime = ishaStart
-                    jamatTime = ishaJamat
-                }else{
-                    let nextDate = "\(Int(currDate)! + 1)"
-                    if let nextDay = monthTimings?[nextDate] as? NSDictionary{
-                        let fajarStart = (nextDay[Namaz.fajarStart.rawValue] as! String)
-                        let fajarJamat = (nextDay[Namaz.fajar.rawValue] as! String)
-                        namazName = "Fajar"
-                        startTime = fajarStart
-                        jamatTime = fajarJamat
-                    }else{
-                        namazName = "Isha"
-                        startTime = ishaStart
-                        jamatTime = ishaJamat
-                    }
-                }
+            }else if zuharHour >= currentHour{
+                
+                namazName = "Zuhr"
+                startTime = zhrStart
+                jamatTime = zhrJamat
+                
+            }else if asarHour >= currentHour{
+                
+                namazName = "Asar"
+                startTime = asrStart
+                jamatTime = asarJamat
+                
+            }else if magribHour >= currentHour{
+                
+                namazName = "Magrib"
+                startTime = magribStart
+                jamatTime = magribJamat
+                
+            }else if ishaHour >= currentHour{
+                
+                namazName = "Isha"
+                startTime = ishaStart
+                jamatTime = ishaJamat
                 
             }else{
-                let nextDate = "\(Int(currDate)! + 1)"
-                if let nextDay = monthTimings?[nextDate] as? NSDictionary{
-                    let fajarStart = (nextDay[Namaz.fajarStart.rawValue] as! String)
-                    let fajarJamat = (nextDay[Namaz.fajar.rawValue] as! String)
-                    namazName = "Fajar"
-                    startTime = fajarStart
-                    jamatTime = fajarJamat
-                }else{
-                    namazName = "Isha"
-                    startTime = ishaStart
-                    jamatTime = ishaJamat
-                    print("next day fajar time error")
-                }
-                
+                showNextDayFajarTime(currDate, monthTimings, &namazName, &startTime, &jamatTime)
             }
         }else{
             namazName = "Loading..."
         }
-        
         
         let entry = NamazEntry(date: currentDate, namazName: namazName, startTime: startTime, jamatTime: jamatTime)
         entries.append(entry)
@@ -174,7 +124,34 @@ struct NamazTimeline: TimelineProvider {
         let timeline = Timeline(entries: entries, policy: .after(refreshDate))
         completion(timeline)
     }
-    
+    //MARK: Show next day Fajar Time
+    fileprivate func showNextDayFajarTime(_ currDate: String, _ monthTimings: NSDictionary?, _ namazName: inout String, _ startTime: inout String, _ jamatTime: inout String) {
+        var nextDate = ""
+        if currDate.prefix(1) == "0"{
+            //01,02, 03 .... 09
+            let withOutZero = "\(Int(currDate)! + 1)"
+            nextDate = "0\(withOutZero)"
+        }else{
+            nextDate = "\(Int(currDate)! + 1)"
+        }
+        
+        if let nextDay = monthTimings?[nextDate] as? NSDictionary{
+            let fajarStart = (nextDay[Namaz.fajarStart.rawValue] as! String)
+            let fajarJamat = (nextDay[Namaz.fajar.rawValue] as! String)
+            namazName = "Fajr"
+            startTime = fajarStart
+            jamatTime = fajarJamat
+        }else{
+            //if adding by 1 to today date we get nothing that means month reached its max
+            let nextDate = "01"
+            let nextDay = monthTimings?[nextDate] as? NSDictionary
+            let fajarStart = (nextDay?[Namaz.fajarStart.rawValue] as! String)
+            let fajarJamat = (nextDay?[Namaz.fajar.rawValue] as! String)
+            namazName = "Fajr"
+            startTime = fajarStart
+            jamatTime = fajarJamat
+        }
+    }
 }
 
 struct NamazEntry: TimelineEntry {
@@ -195,15 +172,15 @@ struct NextNamazTimeEntryView : View {
             VStack{
                 Text(entry.namazName)
                     .foregroundColor(Color.white)
-                    .font(.custom("HelveticaNeue-Medium", size: 22))
+                    .font(.custom("HelveticaNeue-Medium", size: 24))
                 Spacer()
                     .frame(height: 8)
                 Text("B: " + entry.startTime)
                     .foregroundColor(Color.white)
-                    .font(.custom("HelveticaNeue-Medium", size: 20))
+                    .font(.custom("HelveticaNeue-Medium", size: 22))
                 Text("J: " + entry.jamatTime)
                     .foregroundColor(Color.white)
-                    .font(.custom("HelveticaNeue-Medium", size: 20))
+                    .font(.custom("HelveticaNeue-Medium", size: 22))
 
             }
         }
@@ -220,8 +197,8 @@ struct NextNamazTime: Widget {
             NextNamazTimeEntryView(entry: entry)
         }
         .supportedFamilies([.systemSmall])
-        .configurationDisplayName("Namaz Widget")
-        .description("This is a namaz time widget.")
+        .configurationDisplayName("Salaah Widget")
+        .description("This is a Salaah Time Widget.")
     }
 }
 
